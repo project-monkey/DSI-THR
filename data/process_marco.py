@@ -46,13 +46,19 @@ DSI_train_data = []
 DSI_dev_data = []
 corpus_data = []
 
+print("Downloading from huggingface...")
 data = datasets.load_dataset('Tevatron/msmarco-passage-corpus', cache_dir='cache')['train']
 corpus = [item for item in data]
 random.shuffle(corpus)
-dev_query = read_query('msmarco_data/dev.query.tsv')
-dev_qrel = read_qrel('msmarco_data/qrels.dev.small.tsv')
-train_query = read_query('msmarco_data/train.query.tsv')
-train_qrel = read_qrel('msmarco_data/qrels.train.tsv')
+path_url = '/kaggle/working/DSI-THR/data/'
+dev_query = read_query(path_url+'msmarco_data/dev.query.tsv')
+if not dev_query:
+    print("Path failed.   --Thr")
+
+dev_qrel = read_qrel(path_url+'msmarco_data/qrels.dev.small.tsv')
+train_query = read_query(path_url+'msmarco_data/train.query.tsv')
+train_qrel = read_qrel(path_url+'msmarco_data/qrels.train.tsv')
+
 
 train_ids = list(train_qrel.keys())
 random.shuffle(train_ids)
